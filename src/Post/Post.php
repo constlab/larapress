@@ -6,7 +6,7 @@ namespace LaraPress\Post;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\ModelStatus\HasStatuses;
@@ -23,7 +23,7 @@ class Post extends Model implements Sortable
 
     protected $table = 'post';
 
-    protected $fillable = ['title', 'excerpt', 'order_column'];
+    protected $fillable = ['title', 'slug', 'excerpt', 'order_column'];
 
     public $incrementing = false;
 
@@ -32,7 +32,7 @@ class Post extends Model implements Sortable
         static::bootTraits();
 
         static::creating(function (Model $model) {
-            $model->{$model->getKeyName()} = Uuid::uuid4()->toString();
+            $model->{$model->getKeyName()} = Str::uuid();
         });
     }
 
