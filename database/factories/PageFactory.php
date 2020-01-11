@@ -6,14 +6,14 @@ declare(strict_types=1);
 
 use Faker\Generator as Faker;
 use Illuminate\Support\Str;
-use LaraPress\Post\Post;
+use LaraPress\Page\Page;
 
-$factory->define(Post::class, function (Faker $faker) {
+$factory->define(Page::class, function (Faker $faker) {
     $data = [
         'id' => Str::uuid(),
         'title' => $faker->text(50),
         'slug' => $faker->slug(),
-        'post_type' => 'post',
+        'post_type' => 'page',
         'excerpt' => $faker->text(),
     ];
     return $data;

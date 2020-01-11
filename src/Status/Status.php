@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace LaraPress\Status;
 
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Str;
 use Spatie\ModelStatus\Status as BaseStatus;
 
 class Status extends BaseStatus
@@ -17,7 +17,7 @@ class Status extends BaseStatus
         static::bootTraits();
 
         static::creating(function (Model $model) {
-            $model->id = Uuid::uuid4()->toString();
+            $model->id = Str::uuid();
         });
     }
 }

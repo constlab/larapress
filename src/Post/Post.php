@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaraPress\Post;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
@@ -23,16 +24,33 @@ class Post extends Model implements Sortable
 
     protected $table = 'post';
 
-    protected $fillable = ['title', 'slug', 'excerpt', 'order_column'];
+    protected $fillable = ['title', 'slug', 'excerpt', 'post_type', 'order_column'];
 
     public $incrementing = false;
+
+    protected string $postType;
+
+    /**
+     * Post constructor.
+     *
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $path = explode('\\', get_class($this));
+        $this->postType = trim(strtolower((string)array_pop($path)));
+
+        $this->attributes['post_type'] = $this->postType;
+    }
 
     protected static function boot(): void
     {
         static::bootTraits();
 
         static::creating(function (Model $model) {
-            $model->{$model->getKeyName()} = Str::uuid();
+            $model->id = Str::uuid();
         });
     }
 
@@ -44,5 +62,16 @@ class Post extends Model implements Sortable
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
+    }
+
+    /**
+     * @return Builder
+     */
+    public function newQuery(): Builder
+    {
+        $query = parent::newQuery();
+        $query->where('post_type', '=', $this->postType);
+
+        return $query;
     }
 }

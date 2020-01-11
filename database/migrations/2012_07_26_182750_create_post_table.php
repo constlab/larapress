@@ -17,6 +17,7 @@ class CreatePostTable extends Migration
             $table->uuid('id')->primary();
             $table->string('title')->nullable();
             $table->string('slug')->unique();
+            $table->string('post_type', 50)->index();
             $table->text('excerpt')->nullable();
             // $table->uuidMorphs('user');
             $table->json('content')->nullable();
