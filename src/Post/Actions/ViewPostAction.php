@@ -28,7 +28,7 @@ class ViewPostAction
     /**
      * @param string $id
      *
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     * @return Builder|Builder[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      * @throws \Throwable
      */
     public function handle(string $id)
@@ -36,10 +36,10 @@ class ViewPostAction
         $isId = Uuid::isValid($id);
         $post = $this->modelClass::query()
             ->when($isId, function (Builder $query) use ($id) {
-                return $query->find($id);
+                return $query->where('id', '=', $id); // @ToDo add deleted
             })
             ->when(!$isId, function (Builder $query) use ($id) {
-                return $query->where('slug', '=', $id);
+                return $query->where('slug', '=', $id); // @ToDo add publish only
             })
             ->limit(1)
             ->first();
