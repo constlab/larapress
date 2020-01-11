@@ -17,9 +17,18 @@ class PostViewTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function testForGettingPostBySlugWithDraftStatus(): void
+    {
+        $post = Post::currentStatus(Post::DRAFT_STATUS)->first();
+        $this->assertNotNull($post);
+        $response = $this->get("/api/post/{$post->slug}");
+        $response->assertStatus(404);
+    }
+
     public function testForGettingPostBySlug(): void
     {
-        $post = Post::query()->first();
+        $post = Post::currentStatus(Post::PUBLISH_STATUS)->first();
+        $this->assertNotNull($post);
         $response = $this->get("/api/post/{$post->slug}");
         $response->assertStatus(200);
     }

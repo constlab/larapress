@@ -39,7 +39,7 @@ class ViewPostAction
                 return $query->where('id', '=', $id); // @ToDo add deleted
             })
             ->when(!$isId, function (Builder $query) use ($id) {
-                return $query->where('slug', '=', $id); // @ToDo add publish only
+                return $query->where('slug', '=', $id)->currentStatus(Post::PUBLISH_STATUS);
             })
             ->limit(1)
             ->first();
