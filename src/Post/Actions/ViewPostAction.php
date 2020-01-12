@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace LaraPress\Post\Actions;
 
-
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Str;
 use LaraPress\Post\Post;
 use Ramsey\Uuid\Uuid;
 
