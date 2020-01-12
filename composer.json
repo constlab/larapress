@@ -48,8 +48,6 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate"
         ],
-        "test": [
-            "phpunit --colors=always"
-        ]
+        "test": "phpunit --colors=always --coverage-text"
     }
 }
