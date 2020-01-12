@@ -45,7 +45,7 @@ jobs:
         uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php }}
-          extensions: curl, libxml, mbstring, zip, pcntl, pdo, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick
+          extensions: curl, libxml, mbstring, zip, pcntl, pdo, pdo_mysql, bcmath, soap, intl, gd, exif, iconv, imagick
           coverage: none
 
       - name: Install dependencies
@@ -55,3 +55,5 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/phpunit
+        env:
+          DB_HOST: mysql
