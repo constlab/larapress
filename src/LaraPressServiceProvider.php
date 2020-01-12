@@ -50,8 +50,12 @@ class LaraPressServiceProvider extends ServiceProvider
     protected function registerRoutes(): void
     {
         $config = config('larapress.post_types', []);
-        $postTypes = array_keys($config);
-        foreach ($postTypes as $postType) {
+        $config = array_filter($config, function (array $item) {
+            return isset($item['model']);
+        });
+        $postTypeNames = array_keys($config);
+
+        foreach ($postTypeNames as $postType) {
             $indexController = data_get($config, [$postType, 'index-controller'], '\LaraPress\Post\Controllers\PostIndexController');
             $viewController = data_get($config, [$postType, 'view-controller'], '\LaraPress\Post\Controllers\PostViewController');
             $createController = data_get($config, [$postType, 'create-controller'], '\LaraPress\Post\Controllers\PostCreateController');
