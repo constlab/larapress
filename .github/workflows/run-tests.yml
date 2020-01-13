@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:
-ctest:
+  test:
 
     runs-on: ubuntu-latest
     strategy:
