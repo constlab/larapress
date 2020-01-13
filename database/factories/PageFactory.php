@@ -11,10 +11,10 @@ use LaraPress\Page\Page;
 $factory->define(Page::class, function (Faker $faker) {
     $data = [
         'id' => Str::uuid(),
-        'title' => $faker->text(50),
-        'slug' => $faker->slug(),
+        'title' => $faker->text,
+        'slug' => $faker->slug,
         'post_type' => 'page',
-        'excerpt' => $faker->text(),
+        'excerpt' => $faker->text,
     ];
     return $data;
 });

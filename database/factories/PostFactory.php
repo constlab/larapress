@@ -11,10 +11,10 @@ use LaraPress\Post\Post;
 $factory->define(Post::class, function (Faker $faker) {
     $data = [
         'id' => Str::uuid(),
-        'title' => $faker->text(50),
-        'slug' => $faker->slug(),
+        'title' => $faker->title,
+        'slug' => $faker->slug,
         'post_type' => 'post',
-        'excerpt' => $faker->text(),
+        'excerpt' => $faker->text,
     ];
     return $data;
 });
