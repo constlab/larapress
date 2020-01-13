@@ -28,7 +28,7 @@ jobs:
           MYSQL_USER: default
           MYSQL_PASSWORD: secret
         ports:
-          - 3307:3306
+          - 3306/tcp
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
@@ -55,6 +55,3 @@ jobs:
 
       - name: Execute tests
         run: vendor/bin/phpunit
-        env:
-          DB_HOST: mysql
-          DB_PORT: 3307
