@@ -39,9 +39,14 @@ class Post extends Model implements Sortable
     {
         parent::__construct($attributes);
 
-        $path = explode('\\', get_class($this));
-        $this->postType = trim(strtolower((string)array_pop($path)));
-
+        $path = get_class($this);
+        $postTypes = config('larapress.post_types', []);
+        foreach ($postTypes as $name => $options) {
+            if ($options['model'] === $path) {
+                $this->postType = $name;
+                break;
+            }
+        }
         $this->attributes['post_type'] = $this->postType;
     }
 
