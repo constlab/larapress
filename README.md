@@ -1,6 +1,25 @@
-# LaraPress package
+# LaraPress
 
-## Docker image for CI
+Пакет генерирующий REST API CRUD для модели
 
-* `docker build -t registry.gitlab.com/constlab/larapress .`
-* `docker push registry.gitlab.com/constlab/larapress`
+## Установка
+
+## Создание нового типа записи
+
+1. Создать модель наследующую класс `\LaraPress\Post\Post`
+2. Добавить новый тип записи в конфиг `larapress.php`
+
+```php
+<?php
+
+return [
+
+    'post_types' => [
+
+        'wiki' => [
+            'model' => \App\Models\WikiPost::class,
+        ],
+
+    ]
+];
+```
