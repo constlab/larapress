@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:
-  test:
+ctest:
 
     runs-on: ubuntu-latest
     strategy:
@@ -45,7 +45,7 @@ jobs:
         uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php }}
-          extensions: curl, libxml, mbstring, zip, pcntl, pdo, pdo_mysql, bcmath, soap, intl, gd, exif, iconv, imagick
+          extensions: curl, libxml, mbstring, zip, pcntl, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv, imagick
           coverage: none
 
       - name: Install dependencies
