@@ -13,9 +13,6 @@ jobs:
         php: [7.4]
         laravel: [6.*]
         dependency-version: [prefer-lowest, prefer-stable]
-        include:
-          - laravel: 6.*
-            testbench: 4.*
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.dependency-version }}
 
@@ -50,11 +47,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer install
+          composer install --prefer-dist --no-interaction --no-suggest
 
       - name: Execute tests
         run: |
-          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -proot -e "SHOW DATABASES"
-          vendor/bin/phpunit
+          composer test
         env:
           DB_PORT: ${{ job.services.mysql.ports['3306'] }}
