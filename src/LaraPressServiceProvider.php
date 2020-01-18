@@ -6,9 +6,15 @@ namespace LaraPress;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\ModelStatus\ModelStatusServiceProvider;
 
+/**
+ * Class LaraPressServiceProvider
+ *
+ * @package LaraPress
+ */
 class LaraPressServiceProvider extends ServiceProvider
 {
     /**
@@ -62,11 +68,13 @@ class LaraPressServiceProvider extends ServiceProvider
             $updateController = data_get($config, [$postType, 'update-controller'], '\LaraPress\Post\Controllers\PostUpdateController');
             $deleteController = data_get($config, [$postType, 'delete-controller'], '\LaraPress\Post\Controllers\PostDeleteController');
 
-            Route::get("/api/{$postType}", (string)$indexController);
-            Route::get("/api/{$postType}/{id}", (string)$viewController);
-            Route::post("/api/{$postType}", (string)$createController);
-            Route::put("/api/{$postType}/{id}", (string)$updateController);
-            Route::delete("/api/{$postType}/{id}", (string)$deleteController);
+            $routeName = Str::plural($postType);
+
+            Route::get("/api/{$routeName}", (string)$indexController);
+            Route::get("/api/{$routeName}/{id}", (string)$viewController);
+            Route::post("/api/{$routeName}", (string)$createController);
+            Route::put("/api/{$routeName}/{id}", (string)$updateController);
+            Route::delete("/api/{$routeName}/{id}", (string)$deleteController);
         }
     }
 }

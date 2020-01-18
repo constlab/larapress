@@ -18,7 +18,7 @@ class CustomPostTypeTest extends TestCase
 
     public function testForGettingCustomPostType(): void
     {
-        $response = $this->get('/api/wiki');
+        $response = $this->get('/api/wikis');
         $response->assertStatus(200);
 
         $data = data_get($response->json(), 'data', null);
@@ -31,7 +31,7 @@ class CustomPostTypeTest extends TestCase
             'title' => 'New wiki post',
             'excerpt' => 'custom post type',
         ];
-        $response = $this->post('/api/wiki', $data);
+        $response = $this->post('/api/wikis', $data);
         $response->assertStatus(201);
 
         $wikiPost = Wiki::query()->where('title', '=', 'New wiki post')->take(1)->first();

@@ -7,6 +7,7 @@ namespace LaraPress;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Str;
 
 /**
  * Class Controller
@@ -27,6 +28,7 @@ abstract class Controller extends BaseController
     public function __construct(Request $request)
     {
         [, $type] = explode('/', $request->path(), 3);
+        $type = Str::singular($type);
         $this->postTypes = config('larapress.post_types', []);
         if (!array_key_exists($type, $this->postTypes)) {
             abort(400, 'Bad post type.');

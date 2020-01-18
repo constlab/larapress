@@ -10,7 +10,7 @@ class PostIndexTest extends TestCase
 {
     public function testForGettingPosts(): void
     {
-        $response = $this->get('/api/post');
+        $response = $this->get('/api/posts');
         $response->assertStatus(200);
 
         $data = data_get($response->json(), 'data', null);
@@ -20,7 +20,7 @@ class PostIndexTest extends TestCase
 
     public function testForGettingPostsWithLimit()
     {
-        $response = $this->get('/api/post?limit=25');
+        $response = $this->get('/api/posts?limit=25');
         $response->assertStatus(200);
 
         $data = data_get($response->json(), 'data', null);

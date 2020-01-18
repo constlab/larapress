@@ -10,7 +10,7 @@ class PageIndexTest extends TestCase
 {
     public function testForGettingPages(): void
     {
-        $response = $this->get('/api/page');
+        $response = $this->get('/api/pages');
         $response->assertStatus(200);
 
         $data = data_get($response->json(), 'data', null);

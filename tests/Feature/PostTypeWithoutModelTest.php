@@ -15,10 +15,10 @@ class PostTypeWithoutModelTest extends TestCase
 
     public function testForCheckingRoutes(): void
     {
-        $response = $this->get('/api/product');
+        $response = $this->get('/api/products');
         $response->assertStatus(404);
 
-        $response = $this->post('/api/product', []);
+        $response = $this->post('/api/products', []);
         $response->assertStatus(404);
     }
 }

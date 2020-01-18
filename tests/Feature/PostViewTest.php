@@ -13,7 +13,7 @@ class PostViewTest extends TestCase
     public function testForGettingPostById(): void
     {
         $post = Post::query()->first();
-        $response = $this->get("/api/post/{$post->id}");
+        $response = $this->get("/api/posts/{$post->id}");
         $response->assertStatus(200);
     }
 
@@ -21,7 +21,7 @@ class PostViewTest extends TestCase
     {
         $post = Post::currentStatus(Post::DRAFT_STATUS)->first();
         $this->assertNotNull($post);
-        $response = $this->get("/api/post/{$post->slug}");
+        $response = $this->get("/api/posts/{$post->slug}");
         $response->assertStatus(404);
     }
 
@@ -29,14 +29,14 @@ class PostViewTest extends TestCase
     {
         $post = Post::currentStatus(Post::PUBLISH_STATUS)->first();
         $this->assertNotNull($post);
-        $response = $this->get("/api/post/{$post->slug}");
+        $response = $this->get("/api/posts/{$post->slug}");
         $response->assertStatus(200);
     }
 
     public function testForGettingNotExistingPost(): void
     {
         $id = Str::uuid();
-        $response = $this->get("/api/post/{$id}");
+        $response = $this->get("/api/posts/{$id}");
         $response->assertStatus(404);
     }
 }

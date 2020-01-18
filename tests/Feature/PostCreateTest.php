@@ -14,7 +14,7 @@ class PostCreateTest extends TestCase
             'title' => 'Hello, world!',
             'wrong_column' => 'data',
         ];
-        $response = $this->post('/api/post', $data);
+        $response = $this->post('/api/posts', $data);
         $response->assertStatus(201);
 
         // $result = $response->json();

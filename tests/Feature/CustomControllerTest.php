@@ -16,7 +16,7 @@ class CustomControllerTest extends TestCase
 
     public function testForViewCustomController(): void
     {
-        $response = $this->post('/api/post', [
+        $response = $this->post('/api/posts', [
             'title' => 'New Post',
             'status' => 'publish',
         ]);
@@ -24,7 +24,7 @@ class CustomControllerTest extends TestCase
 
         $post = $response->json();
 
-        $viewResponse = $this->get("/api/post/{$post['id']}");
+        $viewResponse = $this->get("/api/posts/{$post['id']}");
         $viewResponse->assertStatus(200);
 
         $viewPost = $viewResponse->json();
