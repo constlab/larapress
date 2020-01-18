@@ -12,6 +12,7 @@ return [
             'index-action' => \LaraPress\Post\Actions\IndexPostAction::class,
             'view-action' => \LaraPress\Post\Actions\ViewPostAction::class,
             'create-action' => \LaraPress\Post\Actions\CreatePostAction::class,
+            'delete-action' => \LaraPress\Post\Actions\DeletePostAction::class,
         ],
 
         'page' => [

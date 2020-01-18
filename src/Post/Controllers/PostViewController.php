@@ -15,19 +15,19 @@ use LaraPress\Controller;
 class PostViewController extends Controller
 {
     /**
-     * @param string $id
+     * @param string $idSlug ID or slug
      *
      * @return JsonResource
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function __invoke(string $id)
+    public function __invoke(string $idSlug)
     {
         $modelClassName = $this->getModelClassName();
         $action = $this->getActionClass('view', $modelClassName);
         /** @var JsonResource $resourceClass */
         $resourceClass = $this->getResourceClassName();
 
-        $data = $action->handle($id);
+        $data = $action->handle($idSlug);
         $result = $resourceClass::make($data);
 
         return $result;

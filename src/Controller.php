@@ -70,10 +70,14 @@ abstract class Controller extends BaseController
     {
         $actionName = rtrim($actionName, '-action');
         $actionName = "{$actionName}-action";
-        $actionClass = data_get($this->postTypes, [$this->type, $actionName], null);
-        if ($actionClass === null) {
-            $actionClass = $this->postTypes['post'][$actionName];
+        $postTypes = [$this->type, 'post'];
+        foreach ($postTypes as $postType) {
+            $actionClass = data_get($this->postTypes, [$postType, $actionName], null);
+            if ($actionClass !== null) {
+                break;
+            }
         }
+        abort_if($actionClass === null, 500, "Action class for action '{$actionName}' not found.");
         if ($modelClassName === null) {
             $modelClassName = $this->getModelClassName();
         }

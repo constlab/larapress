@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaraPress;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -70,11 +71,15 @@ class LaraPressServiceProvider extends ServiceProvider
 
             $routeName = Str::plural($postType);
 
-            Route::get("/api/{$routeName}", (string)$indexController);
-            Route::get("/api/{$routeName}/{id}", (string)$viewController);
-            Route::post("/api/{$routeName}", (string)$createController);
-            Route::put("/api/{$routeName}/{id}", (string)$updateController);
-            Route::delete("/api/{$routeName}/{id}", (string)$deleteController);
+            Route::where([
+                'id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+            ])->group(function (Router $route) use ($routeName, $indexController, $viewController, $createController, $updateController, $deleteController) {
+                $route->get("/api/{$routeName}", (string)$indexController);
+                $route->get("/api/{$routeName}/{idSlug}", (string)$viewController);
+                $route->post("/api/{$routeName}", (string)$createController);
+                $route->put("/api/{$routeName}/{id}", (string)$updateController);
+                $route->delete("/api/{$routeName}/{id}", (string)$deleteController);
+            });
         }
     }
 }
