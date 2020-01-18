@@ -50,10 +50,14 @@ abstract class Controller extends BaseController
      */
     protected function getFormRequestClass(string $requestName): FormRequest
     {
-        $requestClass = data_get($this->postTypes, [$this->type, $requestName],);
-        if ($requestClass === null) {
-            $requestClass = $this->postTypes['post'][$requestName];
+        $postTypes = [$this->type, 'post'];
+        foreach ($postTypes as $postType) {
+            $requestClass = data_get($this->postTypes, [$postType, $requestName], null);
+            if ($requestClass !== null) {
+                break;
+            }
         }
+        abort_if($requestClass === null, 500, "Request class for request name '{$requestName}' not found.");
         return app()->make($requestClass);
     }
 
@@ -93,9 +97,7 @@ abstract class Controller extends BaseController
     protected function getModelClassName(): string
     {
         $modelClass = data_get($this->postTypes, [$this->type, 'model'], null);
-        if ($modelClass === null) {
-            $modelClass = $this->postTypes['post']['model'];
-        }
+        abort_if($modelClass === null, 500, "Model class '{$this->type}' not found.");
         return $modelClass;
     }
 
@@ -106,10 +108,14 @@ abstract class Controller extends BaseController
      */
     protected function getResourceClassName(): string
     {
-        $resourceClass = data_get($this->postTypes, [$this->type, 'resource'], null);
-        if ($resourceClass === null) {
-            $resourceClass = $this->postTypes['post']['resource'];
+        $postTypes = [$this->type, 'post'];
+        foreach ($postTypes as $postType) {
+            $resourceClass = data_get($this->postTypes, [$postType, 'resource'], null);
+            if ($resourceClass !== null) {
+                break;
+            }
         }
+        abort_if($resourceClass === null, 500, "Resource class for post type '{$this->type}' not found.");
         return $resourceClass;
     }
 
