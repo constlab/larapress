@@ -4,6 +4,8 @@
 
 ## Установка
 
+1. `composer require constlab/larapress`
+
 ## Создание нового типа записи
 
 1. Создать модель наследующую класс `\LaraPress\Post\Post`
