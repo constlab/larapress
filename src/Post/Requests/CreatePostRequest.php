@@ -27,9 +27,12 @@ class CreatePostRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
-            'excerpt' => 'string',
-            'slug' => 'string|unique:post',
-            'order_column' => 'numeric',
+            'excerpt' => 'sometimes|string',
+            'slug' => 'sometimes|string',
+            'order_column' => 'sometimes|numeric',
+            'thumb.image' => 'image',
+            'thumb.url' => 'string',
+            'thumb.fields' => 'sometimes|array'
         ];
     }
 }

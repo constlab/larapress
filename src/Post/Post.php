@@ -10,13 +10,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\ModelStatus\HasStatuses;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Post extends Model implements Sortable
+class Post extends Model implements Sortable, HasMedia
 {
-    use SoftDeletes, HasSlug, HasStatuses, SortableTrait;
+    use SoftDeletes, HasSlug, HasStatuses, SortableTrait, HasMediaTrait;
 
     const PUBLISH_STATUS = 'publish';
     const DRAFT_STATUS = 'draft';
@@ -40,13 +42,7 @@ class Post extends Model implements Sortable
         parent::__construct($attributes);
 
         $path = get_class($this);
-        $postTypes = config('larapress.post_types', []);
-        foreach ($postTypes as $name => $options) {
-            if ($options['model'] === $path) {
-                $this->postType = $name;
-                break;
-            }
-        }
+        $this->postType = get_post_type($path);
         $this->attributes['post_type'] = $this->postType;
     }
 

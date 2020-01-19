@@ -13,6 +13,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.4",
+        "ext-json": "*",
         "spatie/eloquent-sortable": "^3.7",
         "spatie/laravel-medialibrary": "^7.18",
         "spatie/laravel-model-status": "^1.9",

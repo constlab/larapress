@@ -49,6 +49,7 @@ class LaraPressServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/larapress.php', 'larapress');
         $this->mergeConfigFrom(__DIR__ . '/../config/model-status.php', 'model-status');
+        $this->mergeConfigFrom(__DIR__ . '/../config/medialibrary.php', 'medialibrary');
 
         $this->app->register(ModelStatusServiceProvider::class);
         $this->app->register(MediaLibraryServiceProvider::class);
