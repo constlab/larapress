@@ -6,7 +6,7 @@
 
 1. `composer require constlab/larapress`
 
-## Функуионал
+## Функционал
 
 ## Посты
 
