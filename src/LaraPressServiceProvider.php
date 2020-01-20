@@ -18,6 +18,10 @@ use Spatie\ModelStatus\ModelStatusServiceProvider;
  */
 class LaraPressServiceProvider extends ServiceProvider
 {
+    protected $urlParams = [
+        'id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+    ];
+
     /**
      * Bootstrap any application services.
      *
@@ -38,6 +42,7 @@ class LaraPressServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(realpath(__DIR__ . '/../database/migrations'));
 
         $this->registerRoutes();
+        $this->registerMediaRoutes();
     }
 
     /**
@@ -57,24 +62,19 @@ class LaraPressServiceProvider extends ServiceProvider
 
     protected function registerRoutes(): void
     {
-        $config = config('larapress.post_types', []);
-        $config = array_filter($config, function (array $item) {
-            return isset($item['model']);
-        });
-        $postTypeNames = array_keys($config);
+        $postTypes = config('larapress.post_types', []);
+        $postTypeNames = get_post_type_names();
 
         foreach ($postTypeNames as $postType) {
-            $indexController = data_get($config, [$postType, 'index-controller'], '\LaraPress\Post\Controllers\PostIndexController');
-            $viewController = data_get($config, [$postType, 'view-controller'], '\LaraPress\Post\Controllers\PostViewController');
-            $createController = data_get($config, [$postType, 'create-controller'], '\LaraPress\Post\Controllers\PostCreateController');
-            $updateController = data_get($config, [$postType, 'update-controller'], '\LaraPress\Post\Controllers\PostUpdateController');
-            $deleteController = data_get($config, [$postType, 'delete-controller'], '\LaraPress\Post\Controllers\PostDeleteController');
+            $indexController = data_get($postTypes, [$postType, 'index-controller'], '\LaraPress\Post\Controllers\PostIndexController');
+            $viewController = data_get($postTypes, [$postType, 'view-controller'], '\LaraPress\Post\Controllers\PostViewController');
+            $createController = data_get($postTypes, [$postType, 'create-controller'], '\LaraPress\Post\Controllers\PostCreateController');
+            $updateController = data_get($postTypes, [$postType, 'update-controller'], '\LaraPress\Post\Controllers\PostUpdateController');
+            $deleteController = data_get($postTypes, [$postType, 'delete-controller'], '\LaraPress\Post\Controllers\PostDeleteController');
 
             $routeName = Str::plural($postType);
 
-            Route::where([
-                'id' => '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
-            ])->group(function (Router $route) use ($routeName, $indexController, $viewController, $createController, $updateController, $deleteController) {
+            Route::where($this->urlParams)->group(function (Router $route) use ($routeName, $indexController, $viewController, $createController, $updateController, $deleteController) {
                 $route->get("/api/{$routeName}", (string)$indexController);
                 $route->get("/api/{$routeName}/{idSlug}", (string)$viewController);
                 $route->post("/api/{$routeName}", (string)$createController);
@@ -82,5 +82,12 @@ class LaraPressServiceProvider extends ServiceProvider
                 $route->delete("/api/{$routeName}/{id}", (string)$deleteController);
             });
         }
+    }
+
+    protected function registerMediaRoutes()
+    {
+        Route::where($this->urlParams)->group(function (Router $route) {
+            $route->get('/api/media', '\LaraPress\Media\MediaController@index');
+        });
     }
 }

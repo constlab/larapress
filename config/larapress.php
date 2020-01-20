@@ -19,6 +19,10 @@ return [
             'model' => \LaraPress\Page\Page::class,
         ],
 
-    ]
+    ],
+
+    'media' => [
+
+    ],
 ];
 

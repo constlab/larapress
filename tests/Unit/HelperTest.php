@@ -34,4 +34,12 @@ class HelperTest extends TestCase
         $this->assertEquals('post', $post);
         $this->assertEquals('wiki', $wiki);
     }
+
+    public function testForGettingPOstTypeNames(): void
+    {
+        $postTypes = get_post_type_names();
+
+        $this->assertIsArray($postTypes);
+        $this->assertEquals(['page', 'post', 'wiki'], $postTypes);
+    }
 }
