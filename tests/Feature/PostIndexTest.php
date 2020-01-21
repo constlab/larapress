@@ -8,22 +8,24 @@ use Tests\TestCase;
 
 class PostIndexTest extends TestCase
 {
-    public function testForGettingPosts(): void
+    /** @test */
+    public function it_can_get_posts(): void
     {
         $response = $this->get('/api/posts');
         $response->assertStatus(200);
 
-        $data = data_get($response->json(), 'data', null);
+        $data = $response->json('data');
         $this->assertIsArray($data);
         $this->assertCount(50, $data);
     }
 
-    public function testForGettingPostsWithLimit()
+    /** @test */
+    public function it_can_get_posts_with_limit()
     {
         $response = $this->get('/api/posts?limit=25');
         $response->assertStatus(200);
 
-        $data = data_get($response->json(), 'data', null);
+        $data = $response->json('data');
         $this->assertIsArray($data);
         $this->assertCount(25, $data);
     }

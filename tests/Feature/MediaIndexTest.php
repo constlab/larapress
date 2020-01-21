@@ -8,7 +8,8 @@ use Tests\TestCase;
 
 class MediaIndexTest extends TestCase
 {
-    public function testForGettingMedia(): void
+    /** @test */
+    public function it_can_get_media(): void
     {
         $response = $this->get('/api/media');
         $response->assertStatus(200);

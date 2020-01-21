@@ -16,16 +16,18 @@ class CustomPostTypeTest extends TestCase
         ]);
     }
 
-    public function testForGettingCustomPostType(): void
+    /** @test */
+    public function it_can_get_custom_posts(): void
     {
         $response = $this->get('/api/wikis');
         $response->assertStatus(200);
 
-        $data = data_get($response->json(), 'data', null);
+        $data = $response->json('data');
         $this->assertIsArray($data);
     }
 
-    public function testForCreateNewWiki(): void
+    /** @test */
+    public function it_can_create_a_custom_post(): void
     {
         $data = [
             'title' => 'New wiki post',

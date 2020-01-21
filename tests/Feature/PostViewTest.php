@@ -23,7 +23,10 @@ class PostViewTest extends TestCase
         $this->assertContains($data['status'], [Post::PUBLISH_STATUS, Post::DRAFT_STATUS, Post::PENDING_STATUS]);
 
         $this->assertArrayHasKey('excerpt', $data);
+
         $this->assertArrayHasKey('thumb', $data);
+        $this->assertIsArray($data['thumb']);
+
         $this->assertArrayHasKey('createdAt', $data);
         $this->assertArrayHasKey('updatedAt', $data);
     }

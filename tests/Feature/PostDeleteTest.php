@@ -10,7 +10,8 @@ use Tests\TestCase;
 
 class PostDeleteTest extends TestCase
 {
-    public function testForDeletingPost()
+    /** @test */
+    public function it_can_delete_post()
     {
         $post = Post::query()->inRandomOrder()->currentStatus(Post::PUBLISH_STATUS)->limit(1)->first();
         $this->assertNotNull($post);
@@ -20,14 +21,16 @@ class PostDeleteTest extends TestCase
         $response->assertStatus(204);
     }
 
-    public function testForDeletingWithWrongId()
+    /** @test */
+    public function it_returns_404_when_deleting_not_exists_post()
     {
         $postId = Str::uuid();
         $response = $this->delete("/api/posts/{$postId}");
         $response->assertStatus(404);
     }
 
-    public function testForDeleteRequestWithWringIDFormat()
+    /** @test */
+    public function it_returns_405_when_request_not_contains_uuid()
     {
         $response = $this->delete("/api/posts/wrong-format-id");
         $response->assertStatus(405); // Method not allowed

@@ -14,7 +14,8 @@ class CustomControllerTest extends TestCase
         $app['config']->set('larapress.post_types.post.view-controller', PostViewController::class);
     }
 
-    public function testForViewCustomController(): void
+    /** @test */
+    public function it_can_use_a_custom_controller_for_create_a_new_post(): void
     {
         $response = $this->post('/api/posts', [
             'title' => 'New Post',

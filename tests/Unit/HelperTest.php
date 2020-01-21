@@ -24,7 +24,8 @@ class HelperTest extends TestCase
         ]);
     }
 
-    public function testForGettingPostTypeFromModelClassName(): void
+    /** @test */
+    public function it_can_get_a_post_name_from_model_class_name(): void
     {
         $page = get_post_type(Page::class);
         $post = get_post_type(Post::class);
@@ -35,7 +36,8 @@ class HelperTest extends TestCase
         $this->assertEquals('wiki', $wiki);
     }
 
-    public function testForGettingPOstTypeNames(): void
+    /** @test */
+    public function it_can_get_post_types_array_from_config(): void
     {
         $postTypes = get_post_type_names();
 

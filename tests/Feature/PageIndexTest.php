@@ -8,12 +8,13 @@ use Tests\TestCase;
 
 class PageIndexTest extends TestCase
 {
-    public function testForGettingPages(): void
+    /** @test */
+    public function it_can_get_pages(): void
     {
         $response = $this->get('/api/pages');
         $response->assertStatus(200);
 
-        $data = data_get($response->json(), 'data', null);
+        $data = $response->json('data');
         $this->assertIsArray($data);
         $this->assertCount(20, $data);
     }

@@ -13,7 +13,8 @@ class PostTypeWithoutModelTest extends TestCase
         $app['config']->set('larapress.post_types.product', []);
     }
 
-    public function testForCheckingRoutes(): void
+    /** @test */
+    public function it_returns_404_when_post_type_registered_without_model(): void
     {
         $response = $this->get('/api/products');
         $response->assertStatus(404);

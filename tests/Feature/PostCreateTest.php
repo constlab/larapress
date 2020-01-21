@@ -9,7 +9,19 @@ use Tests\TestCase;
 
 class PostCreateTest extends TestCase
 {
-    public function testForCreatingPost(): void
+    /** @test */
+    public function it_can_create_a_post(): void
+    {
+        $data = [
+            'title' => 'Hello, world!',
+            'excerpt' => 'text',
+        ];
+        $response = $this->post('/api/posts', $data);
+        $response->assertStatus(201);
+    }
+
+    /** @test */
+    public function it_can_create_a_post_and_ignore_unknown_field(): void
     {
         $data = [
             'title' => 'Hello, world!',
@@ -19,7 +31,8 @@ class PostCreateTest extends TestCase
         $response->assertStatus(201);
     }
 
-    public function testForCreatePostWithThumb(): void
+    /** @test */
+    public function it_can_create_a_post_with_thumb(): void
     {
         $data = [
             'title' => 'Hello, world!',
