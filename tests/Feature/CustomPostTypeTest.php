@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\Stubs\Wiki\Wiki;
 use Tests\TestCase;
 
 class CustomPostTypeTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /**
      * Setup the test environment.
      */
