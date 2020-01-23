@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class PostCreateTest extends TestCase
 {
-    use RefreshDatabase;
-
     /** @test */
     public function it_can_create_a_post(): void
     {

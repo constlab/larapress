@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use LaraPress\Post\Post;
 use Ramsey\Uuid\Uuid;
@@ -12,8 +11,6 @@ use Tests\TestCase;
 
 class PostViewTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**
      * Setup the test environment.
      */

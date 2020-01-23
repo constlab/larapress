@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class MediaIndexTest extends TestCase
 {
-    use DatabaseMigrations;
-
     /**
      * Setup the test environment.
      */

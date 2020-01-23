@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LaraPress\Post\Actions;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use LaraPress\Post\Post;
@@ -19,7 +20,8 @@ class IndexPostAction
      *
      * @param string $modelClassName
      * @param Request $request
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     *
+     * @throws BindingResolutionException
      */
     public function __construct(string $modelClassName, Request $request)
     {
@@ -27,6 +29,9 @@ class IndexPostAction
         $this->request = $request;
     }
 
+    /**
+     * @return Collection
+     */
     public function handle(): Collection
     {
         $limit = (int)$this->request->get('limit', 50);
