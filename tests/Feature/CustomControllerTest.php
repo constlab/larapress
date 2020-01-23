@@ -9,6 +9,17 @@ use Tests\TestCase;
 
 class CustomControllerTest extends TestCase
 {
+    /**
+     * Setup the test environment.
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->withFactories(__DIR__ . '/../../database/factories');
+        $this->seed();
+    }
+
     protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('larapress.post_types.post.view-controller', PostViewController::class);

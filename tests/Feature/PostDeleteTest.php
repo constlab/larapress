@@ -10,6 +10,17 @@ use Tests\TestCase;
 
 class PostDeleteTest extends TestCase
 {
+    /**
+     * Setup the test environment.
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->withFactories(__DIR__ . '/../../database/factories');
+        $this->seed();
+    }
+
     /** @test */
     public function it_can_delete_post()
     {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use LaraPress\Post\Post;
 use Ramsey\Uuid\Uuid;
@@ -11,6 +12,19 @@ use Tests\TestCase;
 
 class PostViewTest extends TestCase
 {
+    use RefreshDatabase;
+
+    /**
+     * Setup the test environment.
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->withFactories(__DIR__ . '/../../database/factories');
+        $this->seed();
+    }
+
     private function assertResponseData(array $data): void
     {
         $this->assertArrayHasKey('id', $data);
