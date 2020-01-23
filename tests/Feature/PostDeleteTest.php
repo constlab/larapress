@@ -16,8 +16,7 @@ class PostDeleteTest extends TestCase
         $post = Post::query()->inRandomOrder()->currentStatus(Post::PUBLISH_STATUS)->limit(1)->first();
         $this->assertNotNull($post);
 
-        $asd = "/api/posts/{$post->id}";
-        $response = $this->delete($asd);
+        $response = $this->delete("/api/posts/{$post->id}");
         $response->assertStatus(204);
     }
 

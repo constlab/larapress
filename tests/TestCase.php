@@ -24,8 +24,8 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $this->artisan('migrate', ['--database' => 'mysql']);
-        $this->withFactories(__DIR__ . '/../database/factories');
-        $this->seed();
+       $this->artisan('migrate', ['--database' => 'mysql']);
+       $this->withFactories(__DIR__ . '/../database/factories');
+       $this->seed();
     }
 }

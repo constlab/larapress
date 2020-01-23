@@ -37,7 +37,7 @@ class HelperTest extends TestCase
     }
 
     /** @test */
-    public function it_can_get_post_types_array_from_config(): void
+    public function it_can_get_post_type_names_from_config(): void
     {
         $postTypes = get_post_type_names();
 

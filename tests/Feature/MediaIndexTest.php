@@ -14,7 +14,7 @@ class MediaIndexTest extends TestCase
         $response = $this->get('/api/media');
         $response->assertStatus(200);
 
-        // $data = data_get($response->json(), 'data', null);
+        // $data = $response->json('data');
         // $this->assertIsArray($data);
         // $this->assertCount(20, $data);
     }
