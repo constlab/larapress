@@ -10,6 +10,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\MediaLibraryServiceProvider;
 use Spatie\ModelStatus\ModelStatusServiceProvider;
+use Spatie\QueryBuilder\QueryBuilderServiceProvider;
 
 /**
  * Class LaraPressServiceProvider
@@ -58,6 +59,7 @@ class LaraPressServiceProvider extends ServiceProvider
 
         $this->app->register(ModelStatusServiceProvider::class);
         $this->app->register(MediaLibraryServiceProvider::class);
+        $this->app->register(QueryBuilderServiceProvider::class);
     }
 
     protected function registerRoutes(): void

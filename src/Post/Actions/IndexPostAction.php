@@ -4,46 +4,52 @@ declare(strict_types=1);
 
 namespace LaraPress\Post\Actions;
 
-use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
-use LaraPress\Post\Post;
+use Illuminate\Contracts\Pagination\Paginator;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
+use Spatie\QueryBuilder\QueryBuilder;
 
+/**
+ * Class IndexPostAction
+ *
+ * @package LaraPress\Post\Actions
+ */
 class IndexPostAction
 {
-    protected Post $modelClass;
-
-    protected Request $request;
+    protected string $modelClassName;
 
     /**
      * IndexPostAction constructor.
      *
      * @param string $modelClassName
-     * @param Request $request
      *
-     * @throws BindingResolutionException
      */
-    public function __construct(string $modelClassName, Request $request)
+    public function __construct(string $modelClassName)
     {
-        $this->modelClass = app()->make($modelClassName);
-        $this->request = $request;
+        $this->modelClassName = $modelClassName;
     }
 
     /**
-     * @return Collection
+     * @return Paginator
      */
-    public function handle(): Collection
+    public function handle(): Paginator
     {
-        $limit = (int)$this->request->get('limit', 50);
-        $offset = (int)$this->request->get('offset', 0);
+        $perPage = request()->query->getInt('perPage', 20);
 
-        $posts = $this->modelClass::query()
-            ->orderBy('created_at')
-            ->orderBy('order_column')
-            ->limit($limit)
-            ->offset($offset)
-            ->get();
-
-        return $posts;
+       return QueryBuilder::for($this->modelClassName)
+            ->allowedFields('id', 'status', 'thumb')
+            ->allowedSorts([
+                'title',
+                AllowedSort::field('orderColumn', 'order_column'),
+                AllowedSort::field('createdAt', 'created_at'),
+                AllowedSort::field('updatedAt', 'updated_at'),
+            ])
+            ->defaultSorts('order_column', '-created_at')
+            ->allowedFilters([
+                'title',
+                'excerpt',
+                AllowedFilter::scope('status', 'currentStatus'),
+            ])
+            ->paginate($perPage);
     }
 }

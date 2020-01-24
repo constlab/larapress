@@ -14,7 +14,7 @@ $factory->define(Post::class, function (Faker $faker) {
         'title' => $faker->title,
         'slug' => $faker->slug,
         'post_type' => 'post',
-        'excerpt' => $faker->text,
+        'excerpt' => $faker->paragraph,
     ];
     return $data;
 });

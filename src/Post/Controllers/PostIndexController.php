@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace LaraPress\Post\Controllers;
 
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use LaraPress\Controller;
 use LaraPress\Post\Resources\PostResource;
 
@@ -18,8 +20,8 @@ class PostIndexController extends Controller
     /**
      * @param Request $request
      *
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @return AnonymousResourceCollection
+     * @throws BindingResolutionException
      */
     public function __invoke(Request $request)
     {
@@ -28,8 +30,7 @@ class PostIndexController extends Controller
         $resource = $this->getResourceClassName();
 
         $data = $action->handle();
-        $result = $resource::collection($data);
 
-        return response()->json(['data' => $result]);
+        return $resource::collection($data);
     }
 }
