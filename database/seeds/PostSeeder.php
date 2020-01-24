@@ -28,7 +28,7 @@ class PostSeeder extends Seeder
                     'title' => 'Some title',
                 ])
                 ->withResponsiveImages()
-                ->toMediaCollection('thumb');;
+                ->toMediaCollection('thumb');
         });
     }
 }
